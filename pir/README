@@ -1,0 +1,26 @@
+#evening.sh	-- Runs daily send mail NOT USED
+morning.sh	-- Runs daily send mail & Resets daily log
+pir.py		-- PIR Montion Detector runs all the time
+run.sh		-- run from /etc/rc.local at bootup
+daily.log	-- timestamps for any daily motion activity
+send_gmail.py	-- Sends emails out
+
+
+Root Cron
+15 08 * * 0 /sbin/shutdown -r now
+
+pi Cron
+00 08 * * * /home/pi/morning.sh >/home/pi/email.log 2>&1
+
+
+# TAR
+tar cvf pir.tar ./*
+scp pir.tar rag@asterisk:./pir.tar
+
+
+
+DYNDNS  
+
+jaxgrandma.home.dyndns.org
+sudo dpkg-reconfigure ddclient
+
