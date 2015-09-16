@@ -1,4 +1,3 @@
-#evening.sh	-- Runs daily send mail NOT USED
 morning.sh	-- Runs daily send mail & Resets daily log
 pir.py		-- PIR Montion Detector runs all the time
 run.sh		-- run from /etc/rc.local at bootup
