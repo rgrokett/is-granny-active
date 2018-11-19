@@ -5,9 +5,13 @@ This python program is designed for Raspberry Pi with Ethernet or Wifi and a PIR
 
 STEPS:
 <ol>
-<li>Setup of the Raspberry Pi with PIR motion sensor
-<li>Install & configure the granny-active software
-<li>Test and Deploy
+<li>Setup of the Raspberry Pi with PIR motion sensor on GPIO pin 4 as in pir.py
+<li>Set up a Webhook-to-SMS in IFTTT (if used)
+<li>Copy all the files in pir folder to /home/pi<br>
+<li>Configure the send_gmail.py and/or send_ifttt.py programs
+<li>Edit morning.sh to run send_gmail.py or send_ifttt.py or both
+<li>Test using $ python send_gmail.py or $ python send_ifttt.py
+<li>Deploy into cron:  $ crontab cronfile
 </ol>
 
 FILES:
@@ -17,6 +21,7 @@ pir.py          -- PIR Montion Detector runs all the time<br>
 run.sh          -- run from /etc/rc.local at bootup<br>
 daily.log       -- timestamps for any daily motion activity<br>
 send_gmail.py   -- Sends emails out<br>
+send_ifttt.py   -- Sends SMS out<br>
 </pre>
 
 CRON:

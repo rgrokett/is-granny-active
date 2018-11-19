@@ -1,0 +1,4 @@
+
+# Cron to run each morning at 08:00 AM
+00 08 * * * /home/pi/morning.sh >/home/pi/email.log 2>&1
+

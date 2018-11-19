@@ -3,8 +3,12 @@
 #00 08 * * * /home/pi/morning.sh
 
 cd /home/pi
+
 # send activity for past 24 hrs
-sudo python -u ./send_gmail.py
+# Send via GMAIL
+#sudo python -u ./send_gmail.py
+# Send via IFTTT
+sudo python -u ./send_ifttt.py
 
 # reset log
 sudo mv daily.log daily.log.bak
