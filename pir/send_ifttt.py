@@ -8,9 +8,11 @@ import requests
 
 
 # IFTTT ACCOUNT INFO
-api_key  = "{YOUR_IFTTT_API_KEY}" // Your API KEY from https://ifttt.com/maker
-event    = "morning_message"
-host     = "maker.ifttt.com"
+api_key  = "b8rXq5kU6UkI50tcd6J5g" # Your API KEY from https://ifttt.com/maker
+event    = "morning_message"       # IFTTT Event ID
+
+# IFTTT limits SMS to ~80 chrs
+useSMS   = 1			   # 1 = SMS, 0 = email
 
 
 # SEND IFTTT
@@ -19,8 +21,9 @@ def sendifttt(message):
     URL = "https://maker.ifttt.com/trigger/"+event+"/with/key/"+api_key
     response = ""
     try:
-        tmout = 15
-        response = requests.get(url = URL, files = DATA, timeout = tmout) 
+        tmout = 30
+        response = requests.get(url = URL, data = DATA, timeout = tmout) 
+	#print DATA	# Uncomment to Debug
     except:
 	    response = "timeout waiting for IFTTT API response"  
     return(response)
@@ -31,39 +34,54 @@ def sendifttt(message):
 #################
 
 # GET ACTIVITY FOR TODAY
+newline  = "<br>"
 hasharray = {} 
 
 try:
   tot = 0;
-  pos = 0;
 
+  # TOTAL UP ACTIVITY COUNTS BY HOUR
   with open('daily.log') as f:
     for line in f:
-	dayhour = line[0:20]
+	dayhour = line[12:20]
 	if not dayhour in hasharray:
 	    hasharray[dayhour] = 1
 	else:
 	    hasharray[dayhour] += 1
 	tot += 1
 except:
-#  print "debug error:", sys.exc_info()[0]
+  #print "debug error:", sys.exc_info()[0]
   tot = 0;
 
 
+# BUILD THE MESSAGE
 if (tot > 0):
-  message = "Activity was seen "+ str(tot) +" times today"
-  message += "\n\n"
-  message += "ACTIVITY  DAY/MO  HOUR   COUNT\n"
+  message = "Activity seen "+ str(tot) +" times"
+  message += newline
   hasharray = collections.OrderedDict(sorted(hasharray.items(), key=lambda t: t[0]))
-  for (name,val) in hasharray.items():
-	message += str(name) + ":00 = "+ str(val) + "\n"
+  if useSMS:  # Limit to just last few entries due to SMS limits
+    last = list(hasharray.items())
+    max  = len(last) 
+    for x in range(max-1, max-5, -1):
+        (name,val) = last[x]
+	message += str(name) + ":00 = "+ str(val) + newline
+  else:  
+    for (name,val) in hasharray.items():
+	message += str(name) + ":00 = "+ str(val) + newline
 else:
   message = 'NO ACTIVITY SEEN TODAY'
 
 message = "" + message + ""
 
+# Limit msg size for SMS
+if useSMS:
+   message = message[0:81] 
+
 status = sendifttt(message)
 
 print "STATUS:"+str(status)+"\n"
-
+if '200' in str(status):
+    print "SUCCESS"
+else:
+    print "IFTTT ERROR"
 

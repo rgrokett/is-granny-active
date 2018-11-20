@@ -28,5 +28,11 @@ CRON:
 <pre>
 pi Cron<br>
 00 08 * * * /home/pi/morning.sh >/home/pi/email.log 2>&1
+</pre>
 
+/etc/rc.local:
+<pre>
+
+/home/pi/run.sh >/dev/null 2>&1
+exit 0
 </pre>
