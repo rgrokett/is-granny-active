@@ -8,13 +8,14 @@ import requests
 
 
 # IFTTT ACCOUNT INFO
-api_key  = "b8rXq5kU6UkI50tcd6J5g" # Your API KEY from https://ifttt.com/maker
+api_key  = "{your_api_key}" # Your API KEY from https://ifttt.com/maker
 event    = "morning_message"       # IFTTT Event ID
 
 # IFTTT limits SMS to ~80 chrs
 useSMS   = 1			   # 1 = SMS, 0 = email
 
 
+#################
 # SEND IFTTT
 def sendifttt(message):
     DATA = { 'value1' : message }
@@ -34,9 +35,11 @@ def sendifttt(message):
 #################
 
 # GET ACTIVITY FOR TODAY
-newline  = "<br>"
+newline   = "<br>"
 hasharray = {} 
+message   = ""
 
+  
 try:
   tot = 0;
 
@@ -69,7 +72,11 @@ if (tot > 0):
     for (name,val) in hasharray.items():
 	message += str(name) + ":00 = "+ str(val) + newline
 else:
-  message = 'NO ACTIVITY SEEN TODAY'
+  # IS THIS A REBOOT MESSAGE?
+  if len(sys.argv) > 1:
+    message = 'PIR SENSOR RESTARTED'
+  else:
+    message += 'NO ACTIVITY SEEN TODAY'
 
 message = "" + message + ""
 

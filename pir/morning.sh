@@ -5,8 +5,6 @@
 cd /home/pi
 
 # send activity for past 24 hrs
-# Send via GMAIL
-#sudo python -u ./send_gmail.py
 # Send via IFTTT
 sudo python -u ./send_ifttt.py
 
