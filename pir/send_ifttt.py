@@ -24,7 +24,7 @@ def sendifttt(message):
     try:
         tmout = 30
         response = requests.get(url = URL, data = DATA, timeout = tmout) 
-    #print DATA # Uncomment to Debug
+    #print( DATA) # Uncomment to Debug
     except:
         response = "timeout waiting for IFTTT API response"  
     return(response)
@@ -53,7 +53,7 @@ try:
         hasharray[dayhour] += 1
       tot += 1
 except:
-  #print "debug error:", sys.exc_info()[0]
+  #print( "debug error:", sys.exc_info()[0])
   tot = 0;
 
 
@@ -70,7 +70,7 @@ if (tot > 0):
     message += str(name) + ":00 = "+ str(val) + newline
   else:  
     for (name,val) in hasharray.items():
-    message += str(name) + ":00 = "+ str(val) + newline
+      message += str(name) + ":00 = "+ str(val) + newline
 else:
   # IS THIS A REBOOT MESSAGE?
   if len(sys.argv) > 1:
@@ -86,9 +86,9 @@ if useSMS:
 
 status = sendifttt(message)
 
-print "STATUS:"+str(status)+"\n"
+print( "STATUS:"+str(status)+"\n")
 if '200' in str(status):
-    print "SUCCESS"
+    print( "SUCCESS")
 else:
-    print "IFTTT ERROR"
+    print("IFTTT ERROR")
 
