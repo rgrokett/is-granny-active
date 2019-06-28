@@ -22,10 +22,10 @@ while True:
         new_state = "HIGH" if current_state else "LOW"
         print("GPIO pin %s is %s" % (sensor, new_state))
 
-	if new_state == "HIGH":
-	  datetime = time.strftime('%d/%m %X')
-	  fh = open("daily.log", "a")
-	  fh.write("activity at:" + datetime + "\n")
-	  fh.close
+    if new_state == "HIGH":
+      datetime = time.strftime('%d/%m %X')
+      fh = open("daily.log", "a")
+      fh.write("activity at:" + datetime + "\n")
+      fh.close
 
 

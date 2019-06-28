@@ -12,7 +12,7 @@ api_key  = "{your_api_key}" # Your API KEY from https://ifttt.com/maker
 event    = "morning_message"       # IFTTT Event ID
 
 # IFTTT limits SMS to ~80 chrs
-useSMS   = 1			   # 1 = SMS, 0 = email
+useSMS   = 1               # 1 = SMS, 0 = email
 
 
 #################
@@ -24,9 +24,9 @@ def sendifttt(message):
     try:
         tmout = 30
         response = requests.get(url = URL, data = DATA, timeout = tmout) 
-	#print DATA	# Uncomment to Debug
+    #print DATA # Uncomment to Debug
     except:
-	    response = "timeout waiting for IFTTT API response"  
+        response = "timeout waiting for IFTTT API response"  
     return(response)
 
 
@@ -46,12 +46,12 @@ try:
   # TOTAL UP ACTIVITY COUNTS BY HOUR
   with open('daily.log') as f:
     for line in f:
-	dayhour = line[12:20]
-	if not dayhour in hasharray:
-	    hasharray[dayhour] = 1
-	else:
-	    hasharray[dayhour] += 1
-	tot += 1
+      dayhour = line[12:20]
+      if not dayhour in hasharray:
+        hasharray[dayhour] = 1
+      else:
+        hasharray[dayhour] += 1
+      tot += 1
 except:
   #print "debug error:", sys.exc_info()[0]
   tot = 0;
@@ -67,10 +67,10 @@ if (tot > 0):
     max  = len(last) 
     for x in range(max-1, max-5, -1):
         (name,val) = last[x]
-	message += str(name) + ":00 = "+ str(val) + newline
+    message += str(name) + ":00 = "+ str(val) + newline
   else:  
     for (name,val) in hasharray.items():
-	message += str(name) + ":00 = "+ str(val) + newline
+    message += str(name) + ":00 = "+ str(val) + newline
 else:
   # IS THIS A REBOOT MESSAGE?
   if len(sys.argv) > 1:
